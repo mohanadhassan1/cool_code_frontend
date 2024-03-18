@@ -24,7 +24,6 @@ import {
 import { Add, Edit, Delete, Done } from "@mui/icons-material";
 import axios from "axios";
 
-
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -50,27 +49,30 @@ export default function Home() {
   const [filterCategory, setFilterCategory] = useState("");
 
   const handleAddTask = async (e) => {
-    // setTasks([...tasks, newTask]);
-    // setNewTask({
-    //   title: "",
-    //   description: "",
-    //   date: new Date(),
-    //   category: "",
-    //   userId: localStorage.getItem("userId"),
-    // });
-    // setOpenAddDialog(false);
 
     e.preventDefault();
     newTask.userId = localStorage.getItem("userId");
     console.log("Task submitted:", newTask);
 
+    setTasks([...tasks, newTask]);
+    setNewTask({
+        title: "",
+        description: "",
+        date: new Date(),
+        category: "",
+        userId: localStorage.getItem("userId"),
+      });
+    setOpenAddDialog(false);
+
     try {
-      const res = await axios.post("https://cool-code-backend.onrender.com/task", newTask);
+      const res = await axios.post(
+        "https://cool-code-backend.onrender.com/task",
+        newTask
+      );
       console.log(res.data);
     } catch (err) {
       alert(`Error: ${err.message}`);
     }
-
   };
 
   const handleEditTask = (index) => {
