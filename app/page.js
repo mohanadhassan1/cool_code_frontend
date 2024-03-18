@@ -22,7 +22,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Add, Edit, Delete, Done } from "@mui/icons-material";
-import Link from "next/link";
+import axios from "axios";
+
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
@@ -35,6 +36,7 @@ export default function Home() {
     description: "",
     date: new Date(),
     category: "",
+    userId: "",
   });
 
   const [editedTask, setEditedTask] = useState({
@@ -42,14 +44,33 @@ export default function Home() {
     description: "",
     date: new Date(),
     category: "",
+    userId: "",
   });
 
   const [filterCategory, setFilterCategory] = useState("");
 
-  const handleAddTask = () => {
-    setTasks([...tasks, newTask]);
-    setNewTask({ title: "", description: "", date: new Date(), category: "" });
-    setOpenAddDialog(false);
+  const handleAddTask = async (e) => {
+    // setTasks([...tasks, newTask]);
+    // setNewTask({
+    //   title: "",
+    //   description: "",
+    //   date: new Date(),
+    //   category: "",
+    //   userId: localStorage.getItem("userId"),
+    // });
+    // setOpenAddDialog(false);
+
+    e.preventDefault();
+    newTask.userId = localStorage.getItem("userId");
+    console.log("Task submitted:", newTask);
+
+    try {
+      const res = await axios.post("http://localhost:5000/task", newTask);
+      console.log(res.data);
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
+
   };
 
   const handleEditTask = (index) => {

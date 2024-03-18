@@ -1,14 +1,15 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box } from '@mui/material';
+import React, { useState } from "react";
+import { Container, TextField, Button, Typography, Box } from "@mui/material";
+import axios from "axios";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    linkedin: '',
+    username: "",
+    email: "",
+    password: "",
+    linkedinURL: "",
   });
 
   const handleChange = (e) => {
@@ -19,10 +20,18 @@ const SignupPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add logic to submit form data to backend or perform validation
+    console.log("Form submitted:", formData);
+
+
+    try {
+      const res = await axios.post("http://localhost:5000/user/signup", formData);
+      console.log(res.data);
+      localStorage.setItem("userId", res.data._id);
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
   };
 
   return (
@@ -62,16 +71,21 @@ const SignupPage = () => {
             onChange={handleChange}
           />
           <TextField
-            name="linkedin"
+            name="linkedinURL"
             type="url"
             label="Linked URL"
             variant="outlined"
             fullWidth
             margin="normal"
-            value={formData.linkedin}
+            value={formData.linkedinURL}
             onChange={handleChange}
           />
-          <Button type="submit" variant="contained" color="primary" sx={{ width: 150, mt: 2 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            sx={{ width: 150, mt: 2 }}
+          >
             sign up
           </Button>
         </form>

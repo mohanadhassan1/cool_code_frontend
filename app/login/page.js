@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
+import axios from "axios";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -17,10 +18,18 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add logic to submit form data to backend or perform validation
+    console.log("Form submitted:", formData);
+
+    try {
+      const res = await axios.post("http://localhost:5000/user/login", formData);
+
+      console.log(res.data.user._id);
+      localStorage.setItem("userId", res.data.user._id);
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
   };
 
   return (
