@@ -65,7 +65,7 @@ export default function Home() {
     console.log("Task submitted:", newTask);
 
     try {
-      const res = await axios.post("http://localhost:5000/task", newTask);
+      const res = await axios.post("https://cool-code-backend.onrender.com/task", newTask);
       console.log(res.data);
     } catch (err) {
       alert(`Error: ${err.message}`);

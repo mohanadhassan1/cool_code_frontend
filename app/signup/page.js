@@ -26,7 +26,7 @@ const SignupPage = () => {
 
 
     try {
-      const res = await axios.post("http://localhost:5000/user/signup", formData);
+      const res = await axios.post("https://cool-code-backend.onrender.com/user/signup", formData);
       console.log(res.data);
       localStorage.setItem("userId", res.data._id);
     } catch (err) {

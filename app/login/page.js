@@ -23,7 +23,7 @@ const LoginPage = () => {
     console.log("Form submitted:", formData);
 
     try {
-      const res = await axios.post("http://localhost:5000/user/login", formData);
+      const res = await axios.post("https://cool-code-backend.onrender.com/user/login", formData);
 
       console.log(res.data.user._id);
       localStorage.setItem("userId", res.data.user._id);
