@@ -93,7 +93,14 @@ export default function RootLayout({ children }) {
               >
                 CoolCode
               </Typography>
+
               
+              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                
+              </Box>
+
+              
+
               <Typography
                 variant="h6"
                 noWrap
